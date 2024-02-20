@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+ name: testHelm
+ namespace: argocd
+   # finalizers: 
+   #   - resources.finalizer.argocd.argoproj.io
+spec:
+ project: default
+ source:
+   repoURL: 'http://gitlab.example.com/root/helm.git'
+   path: ./applications
+   targetRevision: main
+ destination:
+   server: 'https://kubernetes.default.svc'
+   namespace: {{.Values.namespace.name}}
+ syncPolicy:
+   automated:
+     prune: true
+     selfHeal: true
+   syncOptions:
+     - CreateNamespace=true
+     - ApplyOutOfSyncOnly=true
+     - PruneLast=true
+     - Replace=true
+     - ServerSideApply=true
