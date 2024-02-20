@@ -1,0 +1,142 @@
+# Default values for Smart2Go_chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nfs:
+  ip: "172.16.2.157"
+  path: "/home/mkaram/MyFiles/GitOpsi"
+
+
+image:
+  repo: "repo.ntgcloud.net/repository/devopstesting/testwf"
+  tag: 1
+
+namespace:
+  name: thymeleaf
+
+
+DatabaseDriver:
+  postgres:
+    enabled: false
+    driver: org.postgresql.Driver
+    dialect: com.ntg.common.DBCompatibilityHelper.PostgreSQLDialectCustom
+    database: POSTGRESQL
+  oracle:
+    enabled: false
+    diver: oracle.jdbc.OracleDriver
+    dialect: org.hibernate.dialect.Oracle10gDialect
+    database: oracle
+
+
+
+DB:
+  DriverClassName: net.bull.javamelody.JdbcDriver
+  Server: 192.168.3.47
+  Smart2goDB:
+    defaultSchema: public
+    name: smart2go
+    user: smart2go
+    password: smart2go
+  SadminDB:
+    defaultSchema: public
+    name: sadmin
+    user: sadmin
+    password: sadmin
+
+
+ingress:
+  enabled: true
+  ingressClassName: "master"
+  #labels: {}
+  annotations:
+    nginx.org/proxy-connect-timeout: 3600s
+    nginx.org/proxy-read-timeout: "3600"
+    nginx.org/proxy-send-timeout: 3600s
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "180"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "180"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "180"
+    nginx.ingress.kubernetes.io/rewrite-target: /Smart2Go/$2
+    nginx.ingress.kubernetes.io/proxy-body-size: "1024m"
+  hosts: ['test.ntgcloud.net']
+  paths: ['/nts(/|$)(.*)']
+  pathType: ImplementationSpecific
+  tls: 
+    - secretName: my-tls-secret
+      hosts:
+        - test.ntgcloud.net
+
+
+#image:
+#  repository: nginx
+#  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  #  tag: ""
+
+#imagePullSecrets: []
+#nameOverride: ""
+#fullnameOverride: ""
+
+#serviceAccount:
+  # Specifies whether a service account should be created
+#  create: true
+  # Annotations to add to the service account
+#  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+#  name: ""
+
+#podAnnotations: {}
+
+#podSecurityContext: {}
+  # fsGroup: 2000
+
+#securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+
+
+#ingress:
+#  enabled: false
+#  className: ""
+#  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+#  hosts:
+#    - host: chart-example.local
+#      paths:
+#        - path: /
+#          pathType: ImplementationSpecific
+#  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+#resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+#autoscaling:
+#  enabled: false
+#  minReplicas: 1
+#  maxReplicas: 100
+#  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+#nodeSelector: {}
+
+#tolerations: []
+
+#affinity: {}
