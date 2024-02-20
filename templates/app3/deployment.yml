@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{.Release.Name}}-back
+  name: {{.Release.Name}}-back
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+     app: {{.Release.Name}}-back
+  template:
+      metadata:
+        labels:
+          app: {{.Release.Name}}-back
+      spec:
+       containers:
+       - image: {{.Values.image.repo}}{{.Release.Name}}-back:{{.Values.image.tag}}
+         name: {{.Release.Name}}-back
+         imagePullPolicy: Always
+         ports:
+         - containerPort: 80
